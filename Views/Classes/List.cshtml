@@ -1,0 +1,22 @@
+﻿@model IEnumerable<ElliotBrownFordAssignment03ForHttp5112.Models.Classes>
+@{
+    ViewBag.Title = "List";
+}
+
+
+
+<div id="containerlist">
+    <h2>List Of Classes</h2>
+    <form action="/Classes/List" method="GET">
+        <input type="text" name="searchKeyForName" />
+        <input type="submit" value="Search" />
+    </form>
+    @foreach (var classes in Model)
+    {
+        <div class="listitem row">
+            <div class="col-md-12"><a href="/Classes/Show/@classes.ClassId">@classes.ClassName</a></div>
+
+        </div>
+    }
+
+</div>

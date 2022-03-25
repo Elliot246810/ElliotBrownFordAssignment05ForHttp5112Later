@@ -17,26 +17,27 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
         public IEnumerable<Classes> ListClasses (string searchKeyForName = null)
 
         {
-
+            //Access the Database
             MySqlConnection Subj = School.AccessDatabase();
-
+            //Opens the DataBase
             Subj.Open();
 
-
+            //Making a Create Command in Sql
             MySqlCommand mycmds = Subj.CreateCommand();
 
-
+            //Sql Command Text or the What I want to be said in the create statement
             mycmds.CommandText = "Select * From classes where lower(classname) like lower('%" + searchKeyForName + "%') ";
 
-
+            //Sql Reader - reads the cmds line and excutes them
             MySqlDataReader ResultsCmds = mycmds.ExecuteReader();
 
-
+            //List of Classes
             List<Classes> Classess = new List<Classes>();
 
-
+            //While the cmd line is readed
             while (ResultsCmds.Read())
             {
+                //Gets all of the Values from the tables
                 int ClassId = Convert.ToInt32(ResultsCmds["classid"]);
                 string ClassCode = (string)ResultsCmds["classcode"];
                 string ClassName = (string)ResultsCmds["classname"];
@@ -44,6 +45,7 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
                 DateTime FinishDate = (DateTime)ResultsCmds["finishdate"];
                 //string TeacherName = ResultsCmds["teacherfname"] + " " + ResultsCmds["teacherlname"];
 
+                //Puts them in a new Classes Object
                 Classes NewClasses = new Classes();
                 NewClasses.ClassId = ClassId;
                 NewClasses.ClassCode = ClassCode;
@@ -51,11 +53,13 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
                 NewClasses.StartDate = StartDate;
                 NewClasses.FinishDate = FinishDate;
 
+
+                //Add new Class to the Classes List
                 Classess.Add(NewClasses);
             }
-
+            //Closes the Connection
             Subj.Close();
-
+            //Returns the new Classes List
             return Classess;
         }
 
@@ -66,23 +70,25 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
         [Route("api/ClassesData/FindStudent/{id}")]
         public Classes FindClasses(int? id)
         {
+            //Gets a New Class Object
             Classes NewClasses = new Classes();
-
+            //Access the Database
             MySqlConnection Subjuect = School.AccessDatabase();
-
+            //Opens the DataBase
             Subjuect.Open();
 
-
+            //Making a Create Command in Sql
             MySqlCommand mycmds = Subjuect.CreateCommand();
 
-
+            //Sql Command Text or the What I want to be said in the create statement
             mycmds.CommandText = "Select * From classes where classid = " + id;
 
-
+            //Sql Reader - reads the cmds line and excutes them
             MySqlDataReader ResultsCmds = mycmds.ExecuteReader();
-
+            //While the cmd line is readed
             while (ResultsCmds.Read())
             {
+                //Gets all of the Values from the tables
                 int ClassId = Convert.ToInt32(ResultsCmds["classid"]);
                 string ClassCode = (string)ResultsCmds["classcode"];
                 string ClassName = (string)ResultsCmds["classname"];
@@ -90,6 +96,7 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
                 DateTime FinishDate = (DateTime)ResultsCmds["finishdate"];
                 //string TeacherName = ResultsCmds["teacherfname"] + " " + ResultsCmds["teacherlname"];
 
+                //Puts them in the NewClasses Object
                 NewClasses.ClassId = ClassId;
                 NewClasses.ClassCode = ClassCode;
                 NewClasses.ClassName = ClassName;
@@ -98,6 +105,7 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
 
             }
 
+            //returns NewClassess
             return NewClasses;
         }
 

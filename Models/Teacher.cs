@@ -17,7 +17,7 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Models
         public string TeacherFname;
         public string TeacherLname;
         public string EmployeeNumber;
-        public DateTime Hiredate;
+        public DateTime? Hiredate;
         public double Salary;
         public string ClassCode;
         public string ClassName;

@@ -1,0 +1,39 @@
+@model ElliotBrownFordAssignment03ForHttp5112.Models.Teacher
+{
+    ViewBag.Title = "Update";
+}
+
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>Update Teacher</h2>
+<a class="navlink" href="/Teacher/Show/@Model.TeacherId">Back To Teacher</a>
+<form method="POST" action="/Teacher/Update/@Model.TeacherId">
+    <div>
+        <label for="TeacherFname">First Name:</label>
+        <input type="text" name="TeacherFname" value="@Model.TeacherFname" />
+    </div>
+    <div>
+        <label for="TeacherLname">Last Name:</label>
+        <input type="text" name="TeacherLname" value="@Model.TeacherLname" />
+    </div>
+
+    <div>
+        <label for="EmployeeNumber">Employee Number:</label>
+        <input type="text" name="EmployeeNumber" value="EmployeeNumber"/>
+    </div>
+
+    <div>
+        <label for="Hiredate">Hire Date:</label>
+        <input type="datetime" name="Hiredate" value="Hiredate"/>
+    </div>
+
+    <div>
+        <label for="Salary">Salary:</label>
+        <input type="number" step="any" name="Salary" value="Salary"/>
+    </div>
+    <div>
+        <input type="submit" value="Update Teacher" />
+    </div>
+</form>

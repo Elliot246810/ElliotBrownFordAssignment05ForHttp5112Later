@@ -118,8 +118,82 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
             return NewTeacher;
         }
 
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            MySqlConnection Subj = School.AccessDatabase();
+            //Opens the DataBase
+            Subj.Open();
 
-   
+            //Making a Create Command in Sql
+            MySqlCommand mycmds = Subj.CreateCommand();
+
+
+            mycmds.CommandText = "Delete from teachers where teacherid=@id";
+            mycmds.Parameters.AddWithValue("@id", id);
+            mycmds.Prepare();
+
+
+            mycmds.ExecuteNonQuery();
+
+            Subj.Close();
+        }
+        [HttpPost]
+        public void AddTeacher(Teacher NewTeacher)
+        {
+            MySqlConnection Subj = School.AccessDatabase();
+            //Opens the DataBase
+            Subj.Open();
+
+            //Making a Create Command in Sql
+            MySqlCommand mycmds = Subj.CreateCommand();
+
+
+            mycmds.CommandText = "Insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values(@TeacherFname, @TeacherLname, @EmployeeNumber, @Hiredate, @Salary)";
+            mycmds.Parameters.AddWithValue("@TeacherFname", NewTeacher);
+            mycmds.Parameters.AddWithValue("@TeacherLname", NewTeacher);
+            mycmds.Parameters.AddWithValue("@EmployeeNumber", NewTeacher);
+            mycmds.Parameters.AddWithValue("@Hiredate", NewTeacher);
+            mycmds.Parameters.AddWithValue("@Salary", NewTeacher);
+            mycmds.Prepare();
+
+
+            mycmds.ExecuteNonQuery();
+
+            Subj.Close();
+        }
+        [HttpPost]
+        public void UpdateTeacher(int id, [FromBody]Teacher TeacherInfo)
+        {
+
+            MySqlConnection Subj = School.AccessDatabase();
+            
+            Debug.WriteLine(TeacherInfo.TeacherFname)
+            //Opens the DataBase
+            Subj.Open();
+
+            //Making a Create Command in Sql
+            MySqlCommand mycmds = Subj.CreateCommand();
+
+
+            mycmds.CommandText = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@EmployeeNumber, hiredate=@Hiredate, salary=@Salary  where teacherid = @TeacherId";
+            mycmds.Parameters.AddWithValue("@TeacherFname", TeacherInfo.TeacherFname);
+            mycmds.Parameters.AddWithValue("@TeacherLname", TeacherInfo.TeacherLname);
+            mycmds.Parameters.AddWithValue("@EmployeeNumber", TeacherInfo.EmployeeNumber);
+            mycmds.Parameters.AddWithValue("@Hiredate", TeacherInfo.Hiredate);
+            mycmds.Parameters.AddWithValue("@Salary", TeacherInfo.Salary);
+            mycmds.Parameters.AddWithValue("@TeacherId", id)
+            mycmds.Prepare();
+
+
+            mycmds.ExecuteNonQuery();
+
+            Subj.Close();
+
+        }
+
+
+
 
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ElliotBrownFordAssignment03ForHttp5112.Models;
+using System.Diagnostics;
 
 namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
 {
@@ -37,9 +38,73 @@ namespace ElliotBrownFordAssignment03ForHttp5112.Controllers
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
+            Teacher selectedTeacher = controller.FindTeacher(id);
+            return View(selectedTeacher);
+        }
+        //Get : /Teacher/DeleteConfirm
+        public ActionResult DeleteConfirm(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
             Teacher NewTeacher = controller.FindTeacher(id);
             return View(NewTeacher);
         }
-    
+
+        //POST : /Teacher/Delete/{id}
+        public ActionResult Delete(int id)
+        {
+
+            TeacherDataController deletedcontroller = new TeacherDataController();
+            deletedcontroller.DeleteTeacher(id);
+            return RedirectToAction("List");
+        }
+
+        //GET : /Teacher/New
+        public ActionResult New()
+        {
+
+            return View();
+        }
+
+        //POST : /Teacher/Create
+        [HttpPost]
+        public ActionResult Create(string TeacherFname, string TeacherLname , string EmployeeNumber , DateTime? Hiredate , double Salary, string ClassCode , string ClassName)
+        {
+            Debug.WriteLine("I Have accessed the Create Method");
+
+            Teacher NewTeacher = new Teacher();
+            NewTeacher.TeacherFname = TeacherFname;
+            NewTeacher.TeacherLname = TeacherLname;
+            NewTeacher.EmployeeNumber = EmployeeNumber;
+            NewTeacher.Hiredate = Hiredate;
+            NewTeacher.Salary = Salary;
+
+            TeacherDataController newcontroller = new TeacherDataController();
+            newcontroller.AddTeacher(NewTeacher);
+
+            return RedirectToAction("List");
+        }
+            
+        //GET : /Teacher/Update/{id}
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher selectedTeacher = controller.FindTeacher(id);
+            return View(selectedTeacher)
+        }
+
+        //POST : /Teacher/Update/{id}
+        public ActionResult Update(int id,string TeacherFname, string TeacherLname, string EmployeeNumber, DateTime? Hiredate, double Salary)
+        {
+            Teacher TeacherInfo = new Teacher();
+            TeacherInfo.TeacherFname = TeacherFname;
+            TeacherInfo.TeacherLname = TeacherLname;
+            TeacherInfo.EmployeeNumber = EmployeeNumber;
+            TeacherInfo.Hiredate = Hiredate;
+            TeacherInfo.Salary = Salary;
+
+            TeacherDataController newcontroller = new TeacherDataController();
+            newcontroller.UpdateTeacher(id, TeacherInfo);
+            return RedirectToAction("Show/" + id);
+        }
     }
 }
